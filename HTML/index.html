@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Knowledge Overflow</title>
+
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f0faff;
+        }
+        .wrapper {
+            position: relative;
+            max-width: 470px;
+            width: 100%;
+            border-radius: 12px;
+            padding: 20px 30px 120px;
+            background: linear-gradient(121.7deg, rgb(41, 116, 250) 22.9%, rgb(67, 212, 255) 69%);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .form.login {
+            position: absolute;
+            left: 50%;
+            bottom: -86%;
+            transform: translateX(-50%);
+            width: calc(100% + 220px);
+            padding: 20px 140px;
+            border-radius: 50%;
+            height: 100%;
+            background: #fff;
+            transition: all 0.6s ease;
+        }
+        .wrapper.active .form.login {
+            bottom: -12%;
+            border-radius: 35%;
+            box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form header {
+            font-size: 30px;
+            text-align: center;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .form.login header {
+            color: #333;
+            opacity: 0.6;
+        }
+        .wrapper.active .form.login header {
+            opacity: 1;
+        }
+        .wrapper.active .signup header {
+            opacity: 0.6;
+        }
+        .wrapper form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        form input {
+            height: 60px;
+            outline: none;
+            border: none;
+            padding: 0 15px;
+            font-size: 16px;
+            font-weight: 400;
+            color: #333;
+            border-radius: 8px;
+            background: #fff;
+        }
+        .form.login input {
+            border: 1px solid #aaa;
+        }
+        .form.login input:focus {
+            box-shadow: 0 1px 0 #ddd;
+        }
+        .form .dropdown {
+            position: relative;
+        }
+        .form .dropdown select {
+            appearance: none;
+            outline: none;
+            border: 1px solid #aaa; 
+            padding: 0 15px;
+            font-size: 16px;
+            font-weight: 400;
+            color: #525252;
+            font-weight: 600;
+            border-radius: 8px;
+            background: #fff;
+            text-align: center;
+            height: 50px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .form .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .checkbox input[type="checkbox"] {
+            height: 16px;
+            width: 16px;
+            accent-color: #fff;
+            cursor: pointer;
+        }
+        .form .checkbox label {
+            cursor: pointer;
+            color: #fff;
+        }
+        form a {
+            color: #333;
+            text-decoration: none;
+        }
+        form a:hover {
+            text-decoration: underline;
+        }
+        form input[type="submit"] {
+            margin-top: 15px;
+            padding: none;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 1s ease-in-out;
+        }
+        form input[type="submit"]:active {
+            scale:0.8;
+        }
+
+        .form.login input[type="submit"] {
+            background: linear-gradient(121.7deg, rgb(41, 116, 250) 22.9%, rgb(67, 212, 255) 69%);
+            color: #fff;
+            border: none;
+            transition: all 1s ease-in-out;
+        }
+        .form.login input[type="submit"]:active{
+            scale:0.8;
+        }
+        .school-field {
+            display: none;
+
+        }
+        .school-field input{
+          width: 100%;
+        }
+    </style>
+</head>
+<body>
+<section class="wrapper">
+    <div class="form signup">
+        <header>Knowledge Overflow</header>
+        <form action="#">
+            <input type="text" placeholder="Full name" required />
+            <input type="text" placeholder="Email address" required />
+            <input type="password" placeholder="Password" required />
+            <div class="dropdown">
+                <select name="signupAs" id="signupAs" required>
+                    <option value="" disabled selected>Select Signup As</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="student">Student</option>
+                </select>
+            </div>
+            <div class="school-field">
+                <input type="text" placeholder="School name" required />
+            </div>
+            <div class="checkbox">
+                <input type="checkbox" id="signupCheck" />
+                <label for="signupCheck">I accept all terms & conditions</label>
+            </div>
+            <input type="submit" value="Signup" />
+        </form>
+    </div>
+
+    <div class="form login">
+        <header>Login</header>
+        <form onsubmit="return validate()" action="landingPage.html">
+            <input type="text" placeholder="Email address" required />
+            <input type="password" placeholder="Password" required />
+            <a href="#">Forgot password?</a>
+            <div class="dropdown">
+                <select name="loginAs" id="loginAs" required>
+                    <option value="" disabled selected>Select Login As</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="student">Student</option>
+                </select>
+            </div>
+            <input type="submit" value="Login" />
+        </form>
+    </div>
+</section>
+<script>
+const wrapper = document.querySelector(".wrapper"),
+          signupHeader = document.querySelector(".signup header"),
+          loginHeader = document.querySelector(".login header");
+        signupAsDropdown = document.getElementById("signupAs"),
+        schoolField = document.querySelector(".school-field");
+
+
+    signupHeader.addEventListener("click", () => {
+        wrapper.classList.remove("active");
+        if (signupAsDropdown.value === "student") {
+            schoolField.style.display = "block";
+        } else {
+            schoolField.style.display = "none";
+        }
+    });
+
+    loginHeader.addEventListener("click", () => {
+        wrapper.classList.add("active");
+        schoolField.style.display = "none";
+    });
+    signupAsDropdown.addEventListener("change", () => {
+
+        if (signupAsDropdown.value === "student") {
+            schoolField.style.display = "block";
+        } else {
+            schoolField.style.display = "none";
+        }
+    });
+</script>
+</body>
+</html>

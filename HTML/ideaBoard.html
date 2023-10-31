@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Idea Board</title>
+    <link rel="stylesheet" href="/CSS/ideaBoardStyles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/JS/ideaBoardScript.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <section class="drawing-board">
+        <div class="row">
+        <label for="title">Canvas</label>
+        </div>
+        <canvas></canvas>
+      </section>
+      <section class="tools-board">
+        <div class="row">
+          <label class="title">Idea Board</label>
+          <hr>
+          <br>
+          <br>
+          <label class="title">Shapes</label>
+          <hr>
+          <ul class="options">
+            <li class="option tool" id="rectangle">
+              <img src="/Assets/rectangle.svg" alt="">
+              <span>Rectangle</span>
+            </li>
+            <li class="option tool" id="circle">
+              <img src="/Assets/circle.svg" alt="">
+              <span>Circle</span>
+            </li>
+            <li class="option tool" id="triangle">
+              <img src="/Assets/triangle.svg" alt="">
+              <span>Triangle</span>
+            </li>
+            <li class="option">
+              <input type="checkbox" id="fill-color">
+              <label for="fill-color">Fill color</label>
+            </li>
+          </ul>
+        </div>
+        <div class="row">
+          <br>
+          <label class="title">Tools</label>
+          <hr>
+          <ul class="options">
+            <li class="option active tool" id="brush">
+              <img src="/Assets/brush.svg" alt="">
+              <span>Brush</span>
+            </li>
+            <li class="option tool" id="eraser">
+              <img src="/Assets/eraser.svg" alt="">
+              <span>Eraser</span>
+            </li>
+            <br>
+            <label class="title">Size</label>
+            <hr>
+            <br>
+            <li class="option">
+              <input type="range" id="size-slider" min="1" max="30" value="5">
+            </li>
+          </ul>
+        </div>
+        <div class="row colors">
+          <br>
+          <label class="title">Colors</label>
+          <hr>
+          <br>
+          <ul class="options">
+            <li class="option"></li>
+            <li class="option selected"></li>
+            <li class="option"></li>
+            <li class="option"></li>
+            <li class="option">
+              <input type="color" id="color-picker" value="#4A98F7">
+            </li>
+          </ul>
+        </div>
+        <div class="row buttons">
+          <div class="undo-redo-container">
+            <button class="undo-image">Undo</button>
+            <button class="redo-image">Redo</button>
+        </div>
+          <button class="clear-canvas">Clear Canvas</button>
+          <button class="save-img">Export as JPG</button>
+        </div>
+      </section>
+
+    </div>
+    
+  </body>
+</html>
