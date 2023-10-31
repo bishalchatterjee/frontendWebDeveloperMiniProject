@@ -11,7 +11,7 @@ body{
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-image: url(/Assets/formulaBackground.jpg);
+  background: #2bc6d4d5;
   box-shadow: #000;
 }
 .container {
@@ -180,21 +180,4 @@ section{
 .drawing-board canvas{
   width: 100%;
   height: 100%;
-}
-.buttons .undo-image,
-.buttons .redo-image {
-    background: #1d1d1d; /* Change the background color to your preference */
-    color: #FFFFFF; /* Change the text color to your preference */
-    border: 1px solid #7d7d7d; /* Change the border color to your preference */
-  }
-
-.buttons .undo-image:hover,
-.buttons .redo-image:hover {
-    background:#6C757D;
-    transition: all 0.3s ease; /* Change the background color on hover */
-}
-
-.undo-redo-container {
-  display: flex;
-  gap: 10px; /* Adjust the gap between buttons as needed */
 }

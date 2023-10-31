@@ -6,8 +6,6 @@ colorBtns = document.querySelectorAll(".colors .option"),
 colorPicker = document.querySelector("#color-picker"),
 clearCanvas = document.querySelector(".clear-canvas"),
 saveImg = document.querySelector(".save-img"),
-undoBtn = document.querySelector(".undo-image"),
-redoBtn = document.querySelector(".redo-image"),
 ctx = canvas.getContext("2d");
 
 // global variables with default value
@@ -16,129 +14,6 @@ isDrawing = false,
 selectedTool = "brush",
 brushWidth = 5,
 selectedColor = "#000";
-
-
-// Undo and Redo stacks
-const undoStack = [];
-const redoStack = [];
-
-// Store initial state
-saveState();
-
-canvas.addEventListener("mousedown", startDrawing);
-canvas.addEventListener("mousemove", draw);
-canvas.addEventListener("mouseup", stopDrawing);
-
-undoBtn.addEventListener("click", undo);
-redoBtn.addEventListener("click", redo);
-
-function startDrawing(e) {
-  isDrawing = true;
-  ctx.beginPath();
-  ctx.moveTo(e.clientX - canvas.getBoundingClientRect().left, e.clientY - canvas.getBoundingClientRect().top);
-  saveState();
-}
-
-function draw(e) {
-  if (!isDrawing) return;
-  ctx.putImageData(snapshot, 0, 0);
-
-  if (selectedTool === "brush" || selectedTool === "eraser") {
-    ctx.strokeStyle = selectedTool === "eraser" ? "#fff" : selectedColor;
-    ctx.lineTo(e.clientX - canvas.getBoundingClientRect().left, e.clientY - canvas.getBoundingClientRect().top);
-    ctx.stroke();
-  } else if (selectedTool === "rectangle") {
-    drawRect(e);
-  } else if (selectedTool === "circle") {
-    drawCircle(e);
-  } else if (selectedTool === "triangle") {
-    drawTriangle(e);
-  }
-}
-
-let lastX = 0;
-let lastY = 0;
-
-canvas.addEventListener("mousedown", (e) => {
-  isDrawing = true;
-  [lastX, lastY] = [e.clientX - canvas.getBoundingClientRect().left, e.clientY - canvas.getBoundingClientRect().top];
-});
-
-canvas.addEventListener("mousemove", (e) => {
-  if (!isDrawing) return;
-  const currentX = e.clientX - canvas.getBoundingClientRect().left;
-  const currentY = e.clientY - canvas.getBoundingClientRect().top;
-  ctx.lineJoin = "round";
-  ctx.lineCap = "round";
-  ctx.lineWidth = brushWidth;
-  ctx.strokeStyle = selectedColor;
-  ctx.beginPath();
-  ctx.moveTo(lastX, lastY);
-  ctx.lineTo(currentX, currentY);
-  ctx.stroke();
-  [lastX, lastY] = [currentX, currentY];
-});
-
-canvas.addEventListener("mouseup", () => {
-  isDrawing = false;
-});
-
-canvas.addEventListener("mouseout", () => {
-  isDrawing = false;
-});
-
-function stopDrawing() {
-  isDrawing = false;
-  ctx.closePath();
-  saveState();
-}
-
-function saveState() {
-  undoStack.push(canvas.toDataURL());
-  redoStack.length = 0;
-}
-
-function undo() {
-  if (undoStack.length > 1) {
-    redoStack.push(undoStack.pop());
-    const img = new Image();
-    img.src = undoStack[undoStack.length - 1];
-    img.onload = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0);
-    };
-  }
-}
-
-function redo() {
-  if (redoStack.length > 0) {
-    undoStack.push(redoStack.pop());
-    const img = new Image();
-    img.src = undoStack[undoStack.length - 1];
-    img.onload = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0);
-    };
-  }
-}
-
-// Rest of your code for color selection, canvas background, and other features...
-
-// Add an event listener to handle predefined color selections
-const colorOptions = document.querySelectorAll(".colors .option:not(#color-picker)");
-colorOptions.forEach(option => {
-  option.addEventListener("click", () => {
-    const selectedBackgroundColor = option.style.backgroundColor;
-    selectedColor = selectedBackgroundColor;
-    // Update the background color of the color palette to reflect the selected color
-    colorPalette.style.background = selectedBackgroundColor;
-  });
-});
-
-colorPicker.addEventListener("change", () => {
-  selectedColor = colorPicker.value;
-  colorPalette.style.background = selectedColor;
-});
 
 const setCanvasBackground = () => {
     // setting whole canvas background to white, so the downloaded img background will be white
